@@ -10,7 +10,7 @@
 }
 </style>
 <template>
-    <p @click="timer()" class="chrono"> {{ chrono.min }} : {{ chrono.secondes }} : {{ chrono.cent }}</p>
+    <p @click="timer()" class="chrono"> {{ double(chrono.min) }} : {{ double(chrono.secondes) }} : {{ double(chrono.cent) }}</p>
     <div id="div" v-for="(quiz, u) of quizzes" :key="u">
         <p>
             {{ quizzes[u].question }}
@@ -41,19 +41,26 @@ function timer() {
         chrono.intervalId = setInterval(() => {
             chrono.cent--;
             if (chrono.cent === 0) {
-                chrono.cent = 100;
+                chrono.cent = 99;
                 chrono.secondes--;
             }
             else if (chrono.secondes === 0) {
                 chrono.secondes = 60;
                 chrono.min--;
             }
-        }, 10);
-        chr = `${chrono.min - 1} : ${chrono.secondes} : ${chrono.cent}`
+        }, 100);
+        // chr = `${chrono.min - 1} : ${chrono.secondes} : ${chrono.cent}`
     }
     else if (chrono.min <= -1) {
         clearTimeout(chrono.intervalId);
         chr =  `00 : 00 : 00`
+    }
+};
+function double(int){
+    if (int < 10) {
+        return '0'+int
+    }else{
+        return int
     }
 }
 // console.log(timer());
